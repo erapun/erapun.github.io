@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สร้างไฟล์ PDF ด้วย pdfmake</title>
+  <!-- ใส่การเชื่อมโยงกับไฟล์ pdfmake -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+</head>
+<body>
+  <h1>สร้างไฟล์ PDF โดยใช้ pdfmake</h1>
+  
+  <p>นี่คือตัวอย่างเนื้อหาที่จะถูกใส่ในไฟล์ PDF ที่สร้างขึ้น:</p>
+  <ul>
+    <li>รายละเอียด: ตัวอย่างการใช้ pdfmake ในการสร้าง PDF</li>
+    <li>ชื่อ: ตัวอย่างการใช้งาน PDF</li>
+    <li>วันที่: 1 เมษายน 2025</li>
+  </ul>
+
+  <button onclick="generatePDF()">สร้างไฟล์ PDF</button>
+
+  <script>
+    // ฟังก์ชันสำหรับสร้างไฟล์ PDF
+    function generatePDF() {
+      var docDefinition = {
+        content: [
+          { text: 'รายละเอียดเกี่ยวกับการสร้างไฟล์ PDF', style: 'header' },
+          'ตัวอย่างการใช้ pdfmake ในการสร้าง PDF ในเว็บเบราว์เซอร์',
+          { text: 'ชื่อ: ตัวอย่างการใช้งาน PDF', style: 'subheader' },
+          { text: 'วันที่: 1 เมษายน 2025', style: 'subheader' },
+          {
+            ul: [
+              'รายการ 1: สร้างไฟล์ PDF',
+              'รายการ 2: ใช้ไลบรารี pdfmake',
+              'รายการ 3: สร้างในเบราว์เซอร์',
+            ]
+          }
+        ],
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            alignment: 'center',
+            margin: [0, 20, 0, 10]
+          },
+          subheader: {
+            fontSize: 14,
+            italics: true,
+            margin: [0, 10, 0, 5]
+          }
+        }
+      };
+
+      // ใช้ pdfmake เพื่อสร้างไฟล์ PDF
+      pdfMake.createPdf(docDefinition).download('example.pdf');
+    }
+  </script>
+</body>
+</html>
