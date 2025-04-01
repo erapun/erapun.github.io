@@ -1,45 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Details</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+    <title>สร้างวุฒิบัตรออนไลน์</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 </head>
 <body>
-    <h1>Course Details</h1>
-    <div id="course-details">
-        <p><strong>Course Name:</strong> Introduction to Programming</p>
-        <p><strong>Instructor:</strong> John Doe</p>
-        <p><strong>Description:</strong> This course covers the basics of programming using Python.</p>
-    </div>
-    <button onclick="generatePDF()">Generate PDF</button>
+    <h2>กรอกข้อมูลเพื่อสร้างวุฒิบัตร</h2>
+    <label>ชื่อ-สกุล:</label>
+    <input type="text" id="name" placeholder="ชื่อและนามสกุล"><br><br>
+    <label>หลักสูตร:</label>
+    <input type="text" id="course" placeholder="ชื่อหลักสูตร"><br><br>
+    <button onclick="generatePDF()">สร้างวุฒิบัตร</button>
 
     <script>
         function generatePDF() {
+            var name = document.getElementById("name").value;
+            var course = document.getElementById("course").value;
+
+            if (!name || !course) {
+                alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+                return;
+            }
+
             var docDefinition = {
+                pageSize: 'A4',
+                pageOrientation: 'landscape',
                 content: [
-                    { 'Course Details', style: 'header' },
-                    { text: 'Course Name: Introduction to Programming', style: 'subheader' },
-                    { text: 'Instructor: John Doe', style: 'subheader' },
-                    { text: 'Description: This course covers the basics of programming using Python.', style: 'normal' }
+                    { text: 'วุฒิบัตร', style: 'header' },
+                    { text: '\nขอมอบวุฒิบัตรนี้ให้แก่', style: 'subheader' },
+                    { text: name, style: 'name' },
+                    { text: '\nสำเร็จหลักสูตร', style: 'subheader' },
+                    { text: course, style: 'course' },
+                    { text: '\nขอแสดงความยินดี', style: 'subheader' }
                 ],
                 styles: {
-                    header: {
-                        fontSize: 18,
-                        bold: true
-                    },
-                    subheader: {
-                        fontSize: 14,
-                        bold: true
-                    },
-                    normal: {
-                        fontSize: 12
-                    }
+                    header: { fontSize: 30, bold: true, alignment: 'center' },
+                    subheader: { fontSize: 20, alignment: 'center' },
+                    name: { fontSize: 25, bold: true, alignment: 'center', margin: [0, 10, 0, 10] },
+                    course: { fontSize: 22, italics: true, alignment: 'center' }
+                },
+                background: function () {
+                    return [{ canvas: [{ type: 'rect', x: 0, y: 0, w: 841.89, h: 595.28, color: '#D0F0C0' }] }];
                 }
             };
-            pdfMake.createPdf(docDefinition).download('CourseDetails.pdf');
+
+            pdfMake.createPdf(docDefinition).download("certificate.pdf");
         }
     </script>
 </body>
